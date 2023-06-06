@@ -1,4 +1,6 @@
 # Welcome to the Find Your Hat Terminal Game
+
+#### written in node.js
 <br/>
 Users are tasked to:
 <ul>
