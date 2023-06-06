@@ -75,11 +75,58 @@ class Field {
     return
   }
 
-  playGame() {
-    // locate hat coordinates {vert, horiz}
-    const hatCoords = { vert: 0, horiz: 2 }
+  generateField(height, width, holesPercentage = .10) {
 
+    let field = new Array(height);
+
+    for (let row = 0; row < field.length; row++) {
+      field[row] = Array.from(fieldCharacter.repeat(width))
+    }
+
+    // set the hat
+    let hatX = Math.floor(Math.random() * width);
+    let hatY = Math.floor(Math.random() * height);
+
+    while (hatX === 0 && hatY === 0) {
+      let hatX = Math.floor(Math.random() * width);
+      let hatY = Math.floor(Math.random() * height);
+    }
+
+    field[hatY][hatX] = hat;
+
+    // random holes
+    const totalCharacter = height * width;
+    let numOfHoles = Math.ceil(totalCharacter * holesPercentage);
+
+    while (numOfHoles-- > 0) {
+      let holeX = Math.floor(Math.random() * width);
+      let holeY = Math.floor(Math.random() * height);
+
+      while (holeX === 0 && holeY === 0 || field[holeY][holeX] === hat) {
+        let holeX = Math.floor(Math.random() * width);
+        let holeY = Math.floor(Math.random() * height);
+      }
+
+      field[holeY][holeX] = hole;
+    }
+
+    // show character
+    field[0][0] = pathCharacter;
+
+    // update field to the new field
+    this._field = field;
+    return
+  }
+
+  playGame() {
     console.log('Welcome to Locate your Hat!')
+    let userFieldHeight = Number(prompt('Pick your field height'));
+    let userFieldWidth = Number(prompt('Pick your field width'));
+
+    // generate a field
+    this.generateField(userFieldHeight, userFieldWidth);
+
+
     console.log('Your hat is a caret "^" on the map!')
     console.log('Use "L" for left, "R" for right, "U" for up, "D" for down')
 
@@ -127,4 +174,6 @@ const myField = new Field([
 ]);
 
 
-myField.playGame();
+// myField.playGame();
+
+myField.playGame()
