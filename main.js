@@ -128,6 +128,7 @@ class Field {
 
 
     console.log('Your hat is a caret "^" on the map!')
+    console.log('Your player is an asterisk "*" on the map (located in the top left!)')
     console.log('Use "L" for left, "R" for right, "U" for up, "D" for down')
 
     let isValid = true;
